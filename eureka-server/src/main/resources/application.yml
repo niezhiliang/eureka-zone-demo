@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: EUREKA
+eureka:
+  server:
+    #自我保护机制 服务数量多开启，服务数量少关闭
+    enable-self-preservation: true
+    #触发自我保护的阈值
+    renewal-percent-threshold: 0.85
+    #关闭注册表readonly缓存
+    use-read-only-response-cache: false
+    #剔除服务的时间间隔（快速下线）
+    eviction-interval-timer-in-ms: 3000
+  client:
+    #是否注册到eureka
+    register-with-eureka: false
+    fetch-registry: false
+    #分区名称
+    region: suyu
+
+
+
+
+---
+server:
+  port: 7900
+spring:
+  profiles: 7900
+
+eureka:
+  client:
+    availability-zones:
+      suyu: e1,e2
+    service-url:
+      e1: http://localhost:7900/eureka/,http://localhost:7901/eureka/
+      e2: http://localhost:7902/eureka/,http://localhost:7903/eureka/
+---
+server:
+  port: 7901
+spring:
+  profiles: 7901
+
+eureka:
+  client:
+    availability-zones:
+      suyu: e1,e2
+    service-url:
+      e1: http://localhost:7900/eureka/,http://localhost:7901/eureka/
+      e2: http://localhost:7902/eureka/,http://localhost:7903/eureka/
+---
+server:
+  port: 7902
+spring:
+  profiles: 7902
+
+eureka:
+  client:
+    availability-zones:
+      suyu: e1,e2
+    service-url:
+      e1: http://localhost:7900/eureka/,http://localhost:7901/eureka/
+      e2: http://localhost:7902/eureka/,http://localhost:7903/eureka/
+
+---
+server:
+  port: 7903
+spring:
+  profiles: 7903
+
+eureka:
+  client:
+    availability-zones:
+      suyu: e1,e2
+    service-url:
+      e1: http://localhost:7900/eureka/,http://localhost:7901/eureka/
+      e2: http://localhost:7902/eureka/,http://localhost:7903/eureka/
